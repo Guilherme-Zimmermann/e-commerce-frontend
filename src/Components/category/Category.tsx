@@ -27,7 +27,7 @@ export function Category() {
                 { data?.map(category => {
                     const imageUrl = `http://localhost:8080/api/category/image/${category.nameImage}`;
                     return (
-                        <a href="" key={category.id}>
+                        <a href={`/${category.name}/produtos`} key={category.id}>
                             <li className={styles.itemCategory}>
                                 <img src={imageUrl} alt="" />
                                 <p>{category.name}</p>

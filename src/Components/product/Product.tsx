@@ -16,7 +16,7 @@ export interface Product {
 const API_URL = 'http://localhost:8080/api/product'
 
 export function Product({ filtered } : { filtered?: string }) {
-    const { query } = useParams()
+    const { query, categoria } = useParams()
 
     const { data } = useQuery<Product[]>("products", async () => {
         const response = await axios.get(API_URL)
@@ -26,6 +26,7 @@ export function Product({ filtered } : { filtered?: string }) {
 
     const keywords = query ? query.split(' ') : []
     const filteredData = data?.filter(product =>
+            (!categoria || product.category.name === categoria) &&
             // Se a consulta de pesquisa estiver presente, ignore o filtro de categoria
             (!query || keywords.some(keyword => 
                 product.name.toLocaleLowerCase().includes(keyword.toLocaleLowerCase()))) &&
