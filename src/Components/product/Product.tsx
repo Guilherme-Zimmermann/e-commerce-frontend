@@ -38,7 +38,7 @@ export function Product({ filtered } : { filtered?: string }) {
             { query ? <p>Resultados da pesquisa: {query}</p> : null}
             <header className={styles.header}>
                 {filtered ? <h2>{filtered}</h2> : <h2>Nossos produtos</h2>}
-                { query ? null : <a href="">Ver todos</a>}
+                { query ? null : <a href="/produtos">Ver todos</a>}
             </header>
             <ul className={styles.itemList}> 
                 { filteredData?.map(product => {

@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+}
+
+.selectCategory {
+    background-color: var(--gray-200);
+    border-radius: 16px;
+
+    margin: 2rem;
+    margin-right: -1rem;
+
+    padding: 2rem;
+    height: min-content;
+    width: 20rem;
+}
+
+.content {
+    width: 100%;
+}

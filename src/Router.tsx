@@ -5,12 +5,14 @@ import { DefaultLayout } from "./layout/DefaultLayout"
 import { CategoryAdmin } from "./componentsAdmin/categoryAdmin/CategoryAdmin"
 import { ProductAdmin } from "./componentsAdmin/productAdmin/ProductAdmin"
 import { Product } from "./components/product/Product"
+import { ProductPage } from "./pages/productPage/ProductPage"
 
 export function Router() {
     return (
         <Routes>
             <Route path="/" element={<DefaultLayout />}>
                 <Route path="/" element={<Home />} />
+                <Route path="/produtos" element={<ProductPage />}/>
                 <Route path="/pesquisa/:query" element={<Product />}/>
 
                 <Route path="/admin" element={<AdminPanel />} >

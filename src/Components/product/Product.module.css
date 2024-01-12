@@ -23,6 +23,10 @@
     color: var(--gray-700);
 }
 
+.header a:hover {
+    text-decoration: underline;
+}
+
 .itemList {
     display: flex;
     flex-wrap: wrap;
