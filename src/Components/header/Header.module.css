@@ -1,0 +1,63 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+}
+
+.logo { /* Temporário */
+    text-decoration: none;
+    color: var(--gray-700);
+    font-weight: 700;
+    font-size: 3rem;
+}
+
+.searchBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--gray-300);
+    position: relative;
+}
+
+.searchBar input {
+    font-size: 1rem;
+    font-weight: 500;
+
+    width: 43rem;
+    padding: 1rem;
+    gap: 0.5rem;
+    color: var(--gray-400);
+
+    border: 1px solid var(--gray-200);
+    border-radius: 16px;
+}
+
+.searchBar input::placeholder {
+    color: var(--gray-300);
+}
+
+.searchBar input:focus {
+    border: 1px solid var(--gray-700);
+}
+
+.searchBar button {
+    display: flex;
+    align-items: center;
+
+    position: absolute;
+    right: 0;
+    padding: 1rem;
+    height: 1.75rem;
+    background: none;
+    border: none;
+    
+    color: var(--gray-300);
+
+    border-left: 1px solid var(--gray-300);
+    cursor: pointer;
+}
+
+.searchBar button:hover {
+    color: var(--gray-400);
+}
