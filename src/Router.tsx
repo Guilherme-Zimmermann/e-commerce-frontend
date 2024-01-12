@@ -12,9 +12,8 @@ export function Router() {
         <Routes>
             <Route path="/" element={<DefaultLayout />}>
                 <Route path="/" element={<Home />} />
-                <Route path="/produtos" element={<ProductPage />}/>
                 <Route path="/pesquisa/:query" element={<Product />}/>
-                <Route path="/:categoria/produtos" element={<Product />}/>
+                <Route path="/:categoria?/produtos" element={<ProductPage />}/>
 
                 <Route path="/admin" element={<AdminPanel />} >
                     <Route path="categorias" element={<CategoryAdmin />}/>

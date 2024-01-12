@@ -1,7 +1,7 @@
 import { useQuery } from "react-query"
 import styles from "./Product.module.css"
 import axios from "axios"
-import { useParams } from "react-router-dom"
+import { Link, useLocation, useParams } from "react-router-dom"
 
 export interface Product {
     id: string
@@ -17,6 +17,7 @@ const API_URL = 'http://localhost:8080/api/product'
 
 export function Product({ filtered, lessGap } : { filtered?: string, lessGap? : boolean }) {
     const { query, categoria } = useParams()
+    const location = useLocation()
 
     const { data } = useQuery<Product[]>("products", async () => {
         const response = await axios.get(API_URL)
@@ -42,7 +43,9 @@ export function Product({ filtered, lessGap } : { filtered?: string, lessGap? : 
             { query ? <p>Resultados da pesquisa: {query}</p> : null}
             <header className={styles.header}>
                 {filtered ? <h2>{filtered}</h2> : <h2>Nossos produtos</h2>}
-                { query ? null : <a href="/produtos">Ver todos</a>}
+                { !query && location.pathname === "/" 
+                && (filtered ? <Link to={`/${filtered}/produtos`}>Ver todos</Link> 
+                : <Link to="/produtos">Ver todos</Link>)}
             </header>
             <ul className={itemProductClass}> 
                 { filteredData?.map(product => {

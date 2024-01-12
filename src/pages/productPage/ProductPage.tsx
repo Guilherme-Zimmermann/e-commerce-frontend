@@ -5,25 +5,36 @@ import styles from "./ProductPage.module.css"
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+import { useNavigate, useParams } from 'react-router-dom';
+
 export function ProductPage() {
     const [ categories, setCategories ] = useState<Category[]>([])
     const [ selectedCategory, setSelectedCategory ] = useState<string | undefined>(undefined)
+    const { categoria } = useParams()
+    const navigate = useNavigate()
 
     useEffect(() => {
         async function fetchCategories() {
             const response = await axios.get("http://localhost:8080/api/category")
             setCategories(response.data)
+
+            // Se uma categoria foi fornecida na URL, defina-a como a categoria selecionada
+            if (categoria) {
+                setSelectedCategory(categoria)
+            }
         }
 
         fetchCategories()
-    }, [])
+    }, [categoria]) // Adicione 'categoria' como uma dependência para que o useEffect seja executado novamente quando ela mudar
 
     const handleRadioChange = (e : React.ChangeEvent<HTMLInputElement>) => {
         setSelectedCategory(e.target.value)
+        navigate(`/${e.target.value}/produtos`)
     }
 
     const clearSelection = () => {
         setSelectedCategory(undefined)
+        navigate('/produtos')
     }
     return (
         <div className={styles.container}>
