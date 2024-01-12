@@ -8,7 +8,7 @@ export function Home() {
         <div>
             <Category />
             <Product />
-            <Product filtered="Praia"/>
+            <Product filtered="Casamento"/>
             <Product filtered="Piscina"/>
         </div>
     )
