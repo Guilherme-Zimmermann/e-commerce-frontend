@@ -9,9 +9,9 @@ export function AdminPanel() {
             <div className={styles.content}>
                 <aside className={styles.options}>
                     <ul>
-                        <li><a href="/admin/users">Usuário</a></li>
-                        <li><a href="/admin/categories">Categoria</a></li>
-                        <li><a href="/admin/products">Produto</a></li>
+                        <li><a href="/admin/usuarios">Usuário</a></li>
+                        <li><a href="/admin/categorias">Categoria</a></li>
+                        <li><a href="/admin/produtos">Produto</a></li>
                     </ul>
                 </aside>
                 <Outlet />

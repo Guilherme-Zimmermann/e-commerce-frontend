@@ -11,6 +11,7 @@ export interface Category {
 const API_URL = 'http://localhost:8080/api/category'
 
 export function Category() {
+
     const { data } = useQuery<Category[]>("categories", async () => {
         const response = await axios.get(API_URL)
         
