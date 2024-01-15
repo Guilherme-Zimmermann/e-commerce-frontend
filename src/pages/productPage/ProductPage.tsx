@@ -7,6 +7,8 @@ import axios from "axios";
 
 import { useNavigate, useParams } from 'react-router-dom';
 
+const baseUrl = "http://localhost:8080"
+
 export function ProductPage() {
     const [ categories, setCategories ] = useState<Category[]>([])
     const [ selectedCategory, setSelectedCategory ] = useState<string | undefined>(undefined)
@@ -15,7 +17,7 @@ export function ProductPage() {
 
     useEffect(() => {
         async function fetchCategories() {
-            const response = await axios.get("http://localhost:8080/api/category")
+            const response = await axios.get(baseUrl+"/api/category")
             setCategories(response.data)
 
             // Se uma categoria foi fornecida na URL, defina-a como a categoria selecionada

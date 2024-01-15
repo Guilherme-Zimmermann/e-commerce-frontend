@@ -2,6 +2,8 @@ import { useState } from "react"
 import styles from "./CategoryAdmin.module.css"
 import axios from "axios"
 
+const baseUrl = "http://localhost:8080"
+
 export function CategoryAdmin() {
     const [ newCategory, setNewCategory ] = useState('')
     const [ newImage, setNewImage ] = useState<File | null>(null)
@@ -19,7 +21,7 @@ export function CategoryAdmin() {
             formData.append('image', newImage)
         }
 
-        await axios.post("http://localhost:8080/api/category", formData)
+        await axios.post(baseUrl+"/api/category", formData)
         .then((response) => {
             console.log(response.data)
             console.log("Deu bom")

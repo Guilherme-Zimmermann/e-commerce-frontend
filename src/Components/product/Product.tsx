@@ -8,25 +8,26 @@ export interface Product {
     name: string
     description: string
     price: number
-    size: string
+    sizeP: string
     nameImage: string
     category: {id: string, name: string, nameImage: string}
 }
 
-const API_URL = 'http://localhost:8080/api/product'
+const baseUrl = "http://localhost:8080"
 
-export function Product({ filtered, lessGap } : { filtered?: string, lessGap? : boolean }) {
+export function Product({ filtered, quantityInView, lessGap } : { filtered?: string, quantityInView?: number, lessGap? : boolean }) {
     const { query, categoria } = useParams()
     const location = useLocation()
 
     const { data } = useQuery<Product[]>("products", async () => {
-        const response = await axios.get(API_URL)
+        const response = await axios.get(baseUrl+"/api/product")
 
         return response.data
     })
 
     const keywords = query ? query.split(' ') : []
-    const filteredData = data?.filter(product =>
+    const filteredData = data?.filter(product => 
+            // Filtro de acordo com a categoria da url
             (!categoria || product.category.name === categoria) &&
             // Se a consulta de pesquisa estiver presente, ignore o filtro de categoria
             (!query || keywords.some(keyword => 
@@ -48,80 +49,8 @@ export function Product({ filtered, lessGap } : { filtered?: string, lessGap? : 
                 : <Link to="/produtos">Ver todos</Link>)}
             </header>
             <ul className={itemProductClass}> 
-                { filteredData?.map(product => {
-                    const imageUrl = `http://localhost:8080/api/product/image/${product.nameImage}`;
-                    return (
-                        <a href="" key={product.id}>
-                            <li className={styles.itemProduct}>
-                                <img src={imageUrl} alt="" />
-                                <div className={styles.productContent}>
-                                    <p>{product.name}</p>
-                                    <div className={styles.price}>
-                                        <p>R${(product.price * 1.3).toFixed(2).replace('.', ',')}</p>
-                                        <p>R${product.price.toFixed(2).replace('.', ',')}</p>
-                                    </div>
-                                </div>
-                                <button
-                                    onClick={(e) => {
-                                    e.stopPropagation()
-                                    e.preventDefault()
-                                }}>
-                                    Adicionar ao carrinho
-                                </button>
-                            </li>
-                        </a>
-                    )
-                })}
-                { filteredData?.map(product => {
-                    const imageUrl = `http://localhost:8080/api/product/image/${product.nameImage}`;
-                    return (
-                        <a href="" key={product.id}>
-                            <li className={styles.itemProduct}>
-                                <img src={imageUrl} alt="" />
-                                <div className={styles.productContent}>
-                                    <p>{product.name}</p>
-                                    <div className={styles.price}>
-                                        <p>R${(product.price * 1.3).toFixed(2).replace('.', ',')}</p>
-                                        <p>R${product.price.toFixed(2).replace('.', ',')}</p>
-                                    </div>
-                                </div>
-                                <button
-                                    onClick={(e) => {
-                                    e.stopPropagation()
-                                    e.preventDefault()
-                                }}>
-                                    Adicionar ao carrinho
-                                </button>
-                            </li>
-                        </a>
-                    )
-                })}
-                { filteredData?.map(product => {
-                    const imageUrl = `http://localhost:8080/api/product/image/${product.nameImage}`;
-                    return (
-                        <a href="" key={product.id}>
-                            <li className={styles.itemProduct}>
-                                <img src={imageUrl} alt="" />
-                                <div className={styles.productContent}>
-                                    <p>{product.name}</p>
-                                    <div className={styles.price}>
-                                        <p>R${(product.price * 1.3).toFixed(2).replace('.', ',')}</p>
-                                        <p>R${product.price.toFixed(2).replace('.', ',')}</p>
-                                    </div>
-                                </div>
-                                <button
-                                    onClick={(e) => {
-                                    e.stopPropagation()
-                                    e.preventDefault()
-                                }}>
-                                    Adicionar ao carrinho
-                                </button>
-                            </li>
-                        </a>
-                    )
-                })}
-                { filteredData?.map(product => {
-                    const imageUrl = `http://localhost:8080/api/product/image/${product.nameImage}`;
+                { filteredData?.slice(0, quantityInView).map(product => {
+                    const imageUrl = `${baseUrl}/api/product/image/${product.nameImage}`;
                     return (
                         <a href="" key={product.id}>
                             <li className={styles.itemProduct}>

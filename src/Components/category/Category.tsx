@@ -8,12 +8,12 @@ export interface Category {
     nameImage: string
 }
 
-const API_URL = 'http://localhost:8080/api/category'
+const baseUrl = 'http://localhost:8080'
 
 export function Category() {
 
     const { data } = useQuery<Category[]>("categories", async () => {
-        const response = await axios.get(API_URL)
+        const response = await axios.get(baseUrl+"/api/category")
         
         return response.data
     })
@@ -25,7 +25,7 @@ export function Category() {
             </header>
             <ul className={styles.listCategory}>
                 { data?.map(category => {
-                    const imageUrl = `http://localhost:8080/api/category/image/${category.nameImage}`;
+                    const imageUrl = `${baseUrl}/api/category/image/${category.nameImage}`;
                     return (
                         <a href={`/${category.name}/produtos`} key={category.id}>
                             <li className={styles.itemCategory}>

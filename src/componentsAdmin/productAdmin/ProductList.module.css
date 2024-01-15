@@ -1,0 +1,34 @@
+.container table {
+    border-radius: 16px;
+    background-color: var(--gray-200);
+    padding: 1rem;
+
+    border-collapse: separate;
+    border-spacing: 0.9rem;
+}
+
+.container img {
+    width: 3rem;
+    height: 3rem;
+}
+
+.container .btns {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.container button {
+    background-color: var(--purple);
+    color: var(--gray-100);
+    padding: 0.5rem;
+
+    border-radius: 8px;
+    border: none;
+
+    cursor: pointer;
+}
+  
+.container button:hover {
+    background-color: var(--purple-dark);
+}
