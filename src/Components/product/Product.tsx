@@ -9,6 +9,7 @@ export interface Product {
     description: string
     price: number
     sizeP: string
+    quantity: number
     nameImage: string
     category: {id: string, name: string, nameImage: string}
 }
@@ -52,7 +53,7 @@ export function Product({ filtered, quantityInView, lessGap } : { filtered?: str
                 { filteredData?.slice(0, quantityInView).map(product => {
                     const imageUrl = `${baseUrl}/api/product/image/${product.nameImage}`;
                     return (
-                        <a href="" key={product.id}>
+                        <Link to={`/${product.id}/${product.name}`} key={product.id}>
                             <li className={styles.itemProduct}>
                                 <img src={imageUrl} alt="" />
                                 <div className={styles.productContent}>
@@ -70,7 +71,7 @@ export function Product({ filtered, quantityInView, lessGap } : { filtered?: str
                                     Adicionar ao carrinho
                                 </button>
                             </li>
-                        </a>
+                        </Link>
                     )
                 })}
             </ul>

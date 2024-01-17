@@ -5,7 +5,8 @@ import { DefaultLayout } from "./layout/DefaultLayout"
 import { CategoryAdmin } from "./componentsAdmin/categoryAdmin/CategoryAdmin"
 import { ProductAdmin } from "./componentsAdmin/productAdmin/ProductAdmin"
 import { Product } from "./components/product/Product"
-import { ProductPage } from "./pages/productPage/ProductPage"
+import { ProductPage } from "./pages/productsPage/ProductsPage"
+import { ProductItemPage } from "./pages/productItemPage/ProductItemPage"
 
 export function Router() {
     return (
@@ -14,6 +15,7 @@ export function Router() {
                 <Route path="/" element={<Home />} />
                 <Route path="/pesquisa/:query" element={<Product />}/>
                 <Route path="/:categoria?/produtos" element={<ProductPage />}/>
+                <Route path="/:id/:produto" element={<ProductItemPage />}/>
 
                 <Route path="/admin" element={<AdminPanel />} >
                     <Route path="categorias" element={<CategoryAdmin />}/>

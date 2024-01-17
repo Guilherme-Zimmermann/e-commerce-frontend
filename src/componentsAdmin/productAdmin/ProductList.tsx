@@ -21,7 +21,7 @@ export function ProductList() {
         }
 
         fetchProducts();
-    }, [products]);
+    }, []);
 
     // Fetch categorias
     useEffect(() => {
@@ -71,6 +71,7 @@ export function ProductList() {
         await axios.delete(baseUrl+`/api/product/${productId}`)
         .then(() => {
             alert("Deletado com sucesso")
+            setProducts(products.filter(p => p.id !== productId))
         })
         .catch(() => {
             console.log("Deu ruim")

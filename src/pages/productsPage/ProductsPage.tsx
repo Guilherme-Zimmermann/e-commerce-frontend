@@ -1,7 +1,7 @@
 import { Product } from "../../components/product/Product";
 import { Category } from "../../components/category/Category";
 
-import styles from "./ProductPage.module.css"
+import styles from "./ProductsPage.module.css"
 import { useEffect, useState } from "react";
 import axios from "axios";
 
