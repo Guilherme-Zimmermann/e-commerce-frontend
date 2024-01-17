@@ -13,6 +13,7 @@
 .productImage {
     width: 43rem;
     background-color: var(--white);
+    box-shadow: 3px 3px 10px rgb(0, 0, 0, 0.2);
     border-radius: 16px;
 
     padding: 1.5rem;
@@ -21,6 +22,7 @@
 .productImage img {
     width: 100%;
     border-radius: 16px;
+    box-shadow: 3px 3px 10px rgb(0, 0, 0, 0.2);
 }
 
 .productDescription {
@@ -30,6 +32,7 @@
 
     width: 43rem;
     background-color: var(--white);
+    box-shadow: 3px 3px 10px rgb(0, 0, 0, 0.2);
     border-radius: 16px;
 
     padding: 1.5rem;
@@ -38,6 +41,7 @@
 .productContent button {
     background-color: var(--purple);
     color: var(--gray-100);
+    box-shadow: 3px 3px 10px rgb(0, 0, 0, 0.2);
     padding: 0.5rem;
 
     align-self: center;
@@ -47,8 +51,10 @@
     border: none;
 
     cursor: pointer;
+    transition: transform 0.2s;
 }
-  
+
 .productContent button:hover {
     background-color: var(--purple-dark);
+    transform: scale(1.02);
 }

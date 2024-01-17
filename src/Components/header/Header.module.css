@@ -31,6 +31,7 @@
 
     border: 1px solid var(--gray-200);
     border-radius: 16px;
+    box-shadow: 3px 3px 10px rgb(0, 0, 0, 0.2);
 }
 
 .searchBar input::placeholder {
