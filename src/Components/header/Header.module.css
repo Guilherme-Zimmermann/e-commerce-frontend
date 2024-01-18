@@ -62,3 +62,19 @@
 .searchBar button:hover {
     color: var(--gray-400);
 }
+
+.userContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.userContent button {
+    border: none;
+    cursor: pointer;
+}
+
+.userContent a {
+    color: var(--gray-700);
+}

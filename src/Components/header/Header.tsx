@@ -28,12 +28,16 @@ export function Header() {
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                 />
-                <button type="submit"> <MagnifyingGlass size={32}/> </button>
+                <button type="submit" title="Pesquisar"> <MagnifyingGlass size={32}/> </button>
             </form>
             <div className={styles.userContent}>
                 <a href="/admin">ADMIN PANEL</a>
-                <span> <User size={32}/> </span>
-                <span> <ShoppingCart size={32}/> </span>
+                <a href="/perfil" title="Perfil"> 
+                    <User size={32}/> 
+                </a>
+                <button title="Carrinho"> 
+                    <ShoppingCart size={32}/> 
+                </button>
             </div>
         </header>
     )
