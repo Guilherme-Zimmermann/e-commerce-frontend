@@ -4,19 +4,27 @@ import { SearchContext } from "../../context/SearchContext"
 import { useNavigate } from 'react-router-dom'
 
 import styles from "./Header.module.css"
+import { useAuth } from "../../hooks/useAuth"
 
 export function Header() {
     const navigate = useNavigate()
     const { search, setSearch } = useContext(SearchContext)
+    const { user } = useAuth()
 
     const handleSubmit = (e : React.FormEvent) => {
         if (!search) {
             navigate("/")
             return
         }
+
+        const cleanedSearch = search.replace(/[%",!@#$%¨&*()]/g, "")
+        
+        if (!cleanedSearch) {
+            return
+        }
         
         e.preventDefault()
-        navigate(`/pesquisa/${search}`)
+        navigate(`/pesquisa/${cleanedSearch}`)
     }
 
     return (
@@ -31,13 +39,13 @@ export function Header() {
                 <button type="submit" title="Pesquisar"> <MagnifyingGlass size={32}/> </button>
             </form>
             <div className={styles.userContent}>
-                <a href="/admin">ADMIN PANEL</a>
-                <a href="/perfil" title="Perfil"> 
+                {user?.role === "ADMIN" && <a href="/admin">ADMIN PANEL</a>}
+                <a href="/minha-conta" title="Perfil"> 
                     <User size={32}/> 
                 </a>
-                <button title="Carrinho"> 
+                <a href="" title="Carrinho"> 
                     <ShoppingCart size={32}/> 
-                </button>
+                </a>
             </div>
         </header>
     )

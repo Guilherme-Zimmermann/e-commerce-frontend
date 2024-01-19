@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom"
+import { Link, Outlet } from "react-router-dom"
 import styles from "./AdminPanel.module.css"
 
 export function AdminPanel() {
@@ -9,9 +9,9 @@ export function AdminPanel() {
             <div className={styles.content}>
                 <aside className={styles.options}>
                     <ul>
-                        <li><a href="/admin/usuarios">Usuário</a></li>
-                        <li><a href="/admin/categorias">Categoria</a></li>
-                        <li><a href="/admin/produtos">Produto</a></li>
+                        <li><Link to="/admin/usuarios">Usuário</Link></li>
+                        <li><Link to="/admin/categorias">Categoria</Link></li>
+                        <li><Link to="/admin/produtos">Produto</Link></li>
                     </ul>
                 </aside>
                 <Outlet />

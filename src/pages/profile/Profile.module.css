@@ -1,0 +1,70 @@
+.container {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.navBar {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1.25rem;
+    width: 22rem;
+    height: min-content;
+
+    background-color: var(--white);
+    border-radius: 16px;
+}
+
+.navBar a {
+    display: flex;
+
+    color: var(--gray-700);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.navBar a:hover {
+    color: var(--gray-300);
+}
+
+.shoppingContent, .addressContent {
+    height: calc(100vh - 12rem);
+    padding: 2rem;
+
+    background-color: var(--white);
+    border-radius: 16px;
+    flex: 1;
+}
+
+.emptyShopping, .emptyAddress {
+    padding: 4rem;
+    text-align: center;
+}
+
+.addressContent {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2rem;
+}
+
+.addressContent header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.addressContent button {
+    background-color: var(--purple);
+    color: var(--gray-100);
+    border: none;
+    cursor: pointer;
+
+    padding: 0.75rem;
+    border-radius: 16px;
+}
+
+.addressContent button:hover {
+    background-color: var(--purple-dark);
+}
