@@ -7,18 +7,18 @@ export type AuthContextType = {
     user: User | null;
     signed: boolean;
     loading: boolean;
-    signin: (email: string, password: string) => Promise<void>;
-    signup: (name: string, email: string, password: string) => Promise<void>;
-    singout: () => void;
+    signIn: (email: string, password: string) => Promise<void>;
+    signUp: (name: string, email: string, password: string) => Promise<void>;
+    signOut?: () => void;
   };
   
   export const AuthContext = createContext<AuthContextType | undefined>({
     user: null,
     signed: false,
     loading: true,
-    signin: async () => {},
-    signup: async () => {},
-    singout: () => {}
+    signIn: async () => {},
+    signUp: async () => {},
+    signOut: () => {}
   });
 
 export interface User {
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }: any) => {
         }
     }, [])
 
-    const signin = async ( email: string, password: string ) => {
+    const signIn = async ( email: string, password: string ) => {
         try {
             const response = await axios.post(baseUrl+"/auth/login", {email, password})
 
@@ -99,7 +99,7 @@ export const AuthProvider = ({ children }: any) => {
         }
     }
 
-    const signup = async (name: string, email: string, password: string) => {
+    const signUp = async (name: string, email: string, password: string) => {
         try {
             const response = await axios.post(baseUrl+"/auth/register", {name, email, password})
 
@@ -111,13 +111,13 @@ export const AuthProvider = ({ children }: any) => {
         }
     }
 
-    const singout = () => {
+    const signOut = () => {
         setUser(null)
         localStorage.removeItem('user_token')
     }
 
     return (
-        <AuthContext.Provider value={{ user, signed: !!user, loading, signin, signup, singout}}> 
+        <AuthContext.Provider value={{ user, signed: !!user, loading, signIn, signUp, signOut}}> 
             {children} 
         </AuthContext.Provider>
     )
