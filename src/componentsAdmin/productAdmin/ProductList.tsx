@@ -33,7 +33,6 @@ export function ProductList() {
         fetchCategories();
     }, [])
 
-
     // Editar produto
     const handleEditSubmit = async (event: React.FormEvent) => {
         event.preventDefault();

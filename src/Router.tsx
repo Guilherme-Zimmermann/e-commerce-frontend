@@ -15,6 +15,7 @@ import { SignIn } from "./pages/login/SignIn"
 import { ProfileShopping } from "./pages/profile/ProfileShopping"
 import { ProfileAddress } from "./pages/profile/ProfileAddress"
 
+
 const Private = ({ Item }: any) => {
     const { signed, loading }: any = useAuth()
     const navigate = useNavigate()

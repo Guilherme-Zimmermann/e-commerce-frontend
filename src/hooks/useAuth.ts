@@ -8,7 +8,7 @@ export const useAuth = () => {
         loading: true,
         signIn: async () => {},
         signUp: async () => {},
-        singOut: () => {}
+        signOut: () => {}
     }
 
     return context

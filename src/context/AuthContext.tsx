@@ -9,7 +9,7 @@ export type AuthContextType = {
     loading: boolean;
     signIn: (email: string, password: string) => Promise<void>;
     signUp: (name: string, email: string, password: string) => Promise<void>;
-    signOut?: () => void;
+    signOut: () => void;
   };
   
   export const AuthContext = createContext<AuthContextType | undefined>({
@@ -114,6 +114,7 @@ export const AuthProvider = ({ children }: any) => {
     const signOut = () => {
         setUser(null)
         localStorage.removeItem('user_token')
+        localStorage.removeItem("token_life_time")
     }
 
     return (
