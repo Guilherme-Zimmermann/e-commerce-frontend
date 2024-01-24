@@ -1,8 +1,7 @@
 import { useState } from "react"
 import styles from "./CategoryAdmin.module.css"
 import axios from "axios"
-
-const baseUrl = "http://localhost:8080"
+import { baseUrl } from "../../main"
 
 export function CategoryAdmin() {
     const [ newCategory, setNewCategory ] = useState('')

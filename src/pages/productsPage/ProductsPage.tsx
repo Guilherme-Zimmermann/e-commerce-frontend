@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { useNavigate, useParams } from 'react-router-dom';
-
-const baseUrl = "http://localhost:8080"
+import { baseUrl } from "../../main";
 
 export function ProductPage() {
     const [ categories, setCategories ] = useState<Category[]>([])

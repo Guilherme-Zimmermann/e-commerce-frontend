@@ -3,33 +3,41 @@ import styles from "./ProductIemPage.module.css"
 import axios from "axios";
 import { Product } from "../../components/product/Product";
 import { useParams } from "react-router-dom";
-
-const baseUrl = "http://localhost:8080"
+import { baseUrl } from "../../main";
+import { useCart } from "../../hooks/useCart";
 
 export function ProductItemPage() {
     const { id } = useParams() 
-    const [ products, setProducts ] = useState<Product[]>([]);
+    const [ product, setProduct ] = useState<Product>();
+    const { cart, addToCart, isLoading } = useCart()
 
     useEffect(() => {
         async function fecthProducts() {
-            const response = await axios.get(baseUrl+"/api/product")
-            setProducts(response.data)
+            const response = await axios.get(baseUrl+`/api/product/${id}`)
+            setProduct(response.data)
         }
         
         fecthProducts()
     }, [])
 
+    const handleAddCart = (e: React.FormEvent) => {
+        e.preventDefault()
+
+        if(!product || !cart) {
+            return null
+        }
+
+        addToCart(1, product.price, cart.id, product.id)
+    }
+
     return (
         <div className={styles.container}>
+            { isLoading && <div className={styles.loadingPopUp}>Carregando...</div>}
             <div className={styles.productContent}>
-                {products.map(product => {
-                    if (product.id === id) {
-                        const imageUrl = `${baseUrl}/api/product/image/${product.nameImage}`;
-                        return (
-                            <>
-
+                {product && (
+                        <>
                             <div className={styles.productImage}>
-                                <img src={imageUrl} alt="" />
+                                <img src={baseUrl+`/api/product/image/${product.nameImage}`} alt="" />
                             </div>
 
                             <div className={styles.productDescription}>
@@ -51,7 +59,7 @@ export function ProductItemPage() {
                                             <p style={{color: "var(--gray-300)"}}>
                                                 Ou em até 3x de {" "}
                                                 <span style={{color: "var(--gray-700)"}}> 
-                                                    R${(product.price/3).toFixed(2)}
+                                                    R${(product.price /3).toFixed(2)}
                                                 </span>
                                             </p>
                                         </div>
@@ -60,12 +68,11 @@ export function ProductItemPage() {
 
                                 <p>{product.description}</p>
                                 
-                                <button>Adicionar ao carrinho</button>
+                                {cart?.id && <button onClick={handleAddCart}>Adicionar ao carrinho</button>}
                             </div>
                         </>
-                        )
-                    }
-                })}
+                    )
+                }
             </div>
         </div>
     )

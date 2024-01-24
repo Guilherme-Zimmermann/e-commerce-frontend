@@ -5,11 +5,13 @@ import { useNavigate } from 'react-router-dom'
 
 import styles from "./Header.module.css"
 import { useAuth } from "../../hooks/useAuth"
+import { useCart } from "../../hooks/useCart"
 
 export function Header() {
     const navigate = useNavigate()
     const { search, setSearch } = useContext(SearchContext)
     const { user } = useAuth()
+    const { cartItem } = useCart()
 
     const handleSubmit = (e : React.FormEvent) => {
         if (!search) {
@@ -43,8 +45,9 @@ export function Header() {
                 <a href="/minha-conta" title="Perfil"> 
                     <User size={32}/> 
                 </a>
-                <a href="" title="Carrinho"> 
-                    <ShoppingCart size={32}/> 
+                <a href="/meu-carrinho" title="Carrinho"> 
+                    <ShoppingCart size={32}/>
+                    <span>{cartItem.length}</span>
                 </a>
             </div>
         </header>

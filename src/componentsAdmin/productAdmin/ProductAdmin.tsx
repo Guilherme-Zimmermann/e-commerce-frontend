@@ -3,8 +3,7 @@ import styles from "./ProductAdmin.module.css"
 import axios from "axios"
 import { Category } from "../../components/category/Category"
 import { ProductList } from "./ProductList"
-
-const baseUrl = "http://localhost:8080"
+import { baseUrl } from "../../main"
 
 export function ProductAdmin() {
     const [ form, setForm ] = useState({

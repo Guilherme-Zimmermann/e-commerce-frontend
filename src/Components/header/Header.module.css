@@ -95,3 +95,11 @@
 .userContent a:hover {
     color: var(--gray-300);
 }
+
+.userContent a {
+    text-decoration: none;
+}
+
+.userContent span {
+    transform: translateX(-20%) translateY(-50%);
+}

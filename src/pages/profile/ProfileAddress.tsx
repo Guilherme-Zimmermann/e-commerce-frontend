@@ -3,8 +3,7 @@ import { useAuth } from "../../hooks/useAuth"
 import styles from "./Profile.module.css"
 import { X } from "phosphor-react"
 import axios from "axios"
-
-const baseUrl = "http://localhost:8080"
+import { baseUrl } from "../../main"
 
 interface Address {
     id?: string

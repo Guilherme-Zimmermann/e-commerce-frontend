@@ -1,14 +1,13 @@
 import axios from "axios"
 import styles from "./Category.module.css"
 import { useQuery } from "react-query"
+import { baseUrl } from "../../main";
 
 export interface Category {
     id: string;
     name: string;
     nameImage: string
 }
-
-const baseUrl = 'http://localhost:8080'
 
 export function Category() {
 

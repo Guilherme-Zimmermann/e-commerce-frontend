@@ -14,6 +14,7 @@ import { SignUp } from "./pages/login/SignUp"
 import { SignIn } from "./pages/login/SignIn"
 import { ProfileShopping } from "./pages/profile/ProfileShopping"
 import { ProfileAddress } from "./pages/profile/ProfileAddress"
+import { Cart } from "./pages/cart/Cart"
 
 
 const Private = ({ Item }: any) => {
@@ -45,6 +46,7 @@ export function Router() {
                 <Route path="/pesquisa/:query" element={<Product />}/>
                 <Route path="/:categoria?/produtos" element={<ProductPage />}/>
                 <Route path="/:id/:produto" element={<ProductItemPage />}/>
+                <Route path="/meu-carrinho" element={<Cart />} />
 
                 <Route path="/minha-conta" element={<Private Item={Profile} />} >
                     <Route index element={<ProfileShopping />}/>

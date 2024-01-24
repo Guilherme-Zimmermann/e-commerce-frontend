@@ -2,6 +2,8 @@ import { useQuery } from "react-query"
 import styles from "./Product.module.css"
 import axios from "axios"
 import { Link, useLocation, useParams } from "react-router-dom"
+import { Category } from "../category/Category"
+import { baseUrl } from "../../main"
 
 export interface Product {
     id: string
@@ -11,10 +13,8 @@ export interface Product {
     sizeP: string
     quantity: number
     nameImage: string
-    category: {id: string, name: string, nameImage: string}
+    category: Category
 }
-
-const baseUrl = "http://localhost:8080"
 
 export function Product({ filtered, quantityInView, lessGap } : { filtered?: string, quantityInView?: number, lessGap? : boolean }) {
     const { query, categoria } = useParams()

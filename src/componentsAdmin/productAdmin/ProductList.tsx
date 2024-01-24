@@ -3,8 +3,7 @@ import { Product } from '../../components/product/Product';
 import axios from 'axios';
 import styles from "./ProductList.module.css"
 import { Category } from '../../components/category/Category';
-
-const baseUrl = "http://localhost:8080"
+import { baseUrl } from '../../main';
 
 export function ProductList() {
     const [ products, setProducts ] = useState<Product[]>([]);

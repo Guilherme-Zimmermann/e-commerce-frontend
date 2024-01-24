@@ -1,7 +1,6 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
-
-const baseUrl = "http://localhost:8080"
+import { baseUrl } from "../main";
 
 export type AuthContextType = {
     user: User | null;
