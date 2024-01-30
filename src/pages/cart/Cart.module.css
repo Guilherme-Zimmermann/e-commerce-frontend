@@ -21,7 +21,7 @@
     
     transform: translate(-50%, -50%); 
     background-color: var(--gray-100);
-    box-shadow: 3px 3px 10px rgb(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px rgb(0, 0, 0, 0.2);
     border-radius: 16px;
     
     z-index: 1000;
@@ -38,6 +38,7 @@
     padding: 1.5rem;
 
     border-radius: 16px;
+    overflow-x: auto;
 }
 
 .tableContent table {

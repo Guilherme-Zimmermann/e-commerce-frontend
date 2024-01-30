@@ -60,6 +60,27 @@
     padding: 1.5rem;
 }
 
+.quantityContent {
+    display: flex;
+    gap: 1rem;
+}
+
+.quantityContent input {
+    text-align: center;
+    align-self: center;
+    justify-self: center;
+    width: 2rem;
+}
+
+.quantityContent .addRemove {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.quantityContent span {
+    cursor: pointer;
+}
+
 .productContent button {
     background-color: var(--purple);
     color: var(--gray-100);
@@ -79,4 +100,16 @@
 .productContent button:hover {
     background-color: var(--purple-dark);
     transform: scale(1.02);
+}
+
+@media (max-width: 724px) {
+    .productContent {
+        flex-direction: column;
+    }
+    .productImage {
+        width: 100%;
+    }
+    .productDescription {
+        width: 100%;
+    }
 }

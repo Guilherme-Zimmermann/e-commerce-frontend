@@ -18,6 +18,12 @@ export interface CartItem {
     quantity: number
     price: number
     subTotal?: number
+    status?: string
+}
+
+export interface CartItemPK{
+    cart: {id: string}
+    product: {id: string}
 }
 
 type CartContextType = {
@@ -27,6 +33,7 @@ type CartContextType = {
     addToCart: (quantity: number, price: number, cartId: string, productId: string) => void
     updateToCart: (quantity: number, price: number, cartId: string, productId: string) => void
     removeFromCart: (cartId: string, productId: string) => void
+    checkout : (items: CartItemPK[]) => void
 }
 
 export const CartContext = createContext<CartContextType>({ 
@@ -35,7 +42,8 @@ export const CartContext = createContext<CartContextType>({
     isLoading: false,
     addToCart: () => {},
     updateToCart: () => {},
-    removeFromCart: () => {} 
+    removeFromCart: () => {},
+    checkout: () => {}
 })
 
 export const CartProvider = ({ children }: any) => {
@@ -57,9 +65,11 @@ export const CartProvider = ({ children }: any) => {
 
     // Fetch CartItem
     useEffect(() => {
+        setIsLoading(true)
         async function fetchCartItem() {
             const response = await axios.get(baseUrl+`/api/cartitem/${cart?.id}`)
             setCartItem(response.data)
+            setIsLoading(false)
         }
 
         fetchCartItem()
@@ -69,21 +79,16 @@ export const CartProvider = ({ children }: any) => {
         setIsLoading(true)
         const cart = { id: cartId}
         const product = { id: productId }
-        const existCartItem = cartItem.find(item => item.product.id === productId)
+        const existCartItem = cartItem.find(item => item.product.id === productId && item.status === "PENDING")
         
         if (existCartItem) {
-            quantity = existCartItem.quantity + 1
-            console.log(quantity)
-            await axios.put(baseUrl+`/api/cartitem/${cartId}/${productId}`, {quantity, price, cart, product}) 
-            .then((response) => {
-                console.log(response.data)
-                setCartItem(currentCart => currentCart.map(item => item.product.id === productId ? {...item, quantity} : item));
-            })
+            window.alert("Esse produto já foi adicionado ao carrinho")
         } else {
 
             await axios.post(baseUrl+"/api/cartitem", {quantity, price, cart, product})
             .then( async (response) => {
                 console.log(response.data)
+                window.alert("Produto adicionado com sucesso!")
             })
             .catch(() =>{
                 console.log("Deu ruim")
@@ -117,12 +122,30 @@ export const CartProvider = ({ children }: any) => {
             setCartItem(currentItems => currentItems.filter(item => item.product.id !== productId));
             const total = cartItem.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             setCart(currentCart => currentCart ? { ...currentCart, totalPrice: total } : undefined);
+            window.alert("Produto removido com sucesso!")
         })
         setIsLoading(false)
     }
 
+    const checkout = async (items: CartItemPK[]) => {
+        setIsLoading(true)
+        if (items.length > 0) {
+            await axios.put(baseUrl+"/api/cartitem/checkout", items)
+            .then (() => {
+                setCartItem([])
+                window.alert("Compra finalizada com sucesso!")
+            })
+            .catch((error) => {
+                console.error("Erro ao finalizar a compra: ", error);
+            });
+            } else {
+                window.alert("Não há itens pendentes no carrinho para finalizar a compra.");
+            }
+        setIsLoading(false)
+    }
+
     return (
-        <CartContext.Provider value={{ cart, cartItem, isLoading, addToCart, updateToCart, removeFromCart }}>
+        <CartContext.Provider value={{ cart, cartItem, isLoading, addToCart, updateToCart, removeFromCart, checkout }}>
             {children}
         </CartContext.Provider>
     )

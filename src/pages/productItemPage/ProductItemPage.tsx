@@ -5,11 +5,14 @@ import { Product } from "../../components/product/Product";
 import { useParams } from "react-router-dom";
 import { baseUrl } from "../../main";
 import { useCart } from "../../hooks/useCart";
+import { Minus, Plus } from "phosphor-react";
 
 export function ProductItemPage() {
     const { id } = useParams() 
     const [ product, setProduct ] = useState<Product>();
     const { cart, addToCart, isLoading } = useCart()
+
+    const [ quantity, setQuantity ] = useState(1)
 
     useEffect(() => {
         async function fecthProducts() {
@@ -27,7 +30,20 @@ export function ProductItemPage() {
             return null
         }
 
-        addToCart(1, product.price, cart.id, product.id)
+        addToCart(quantity, product.price, cart.id, product.id)
+        setQuantity(1)
+    }
+
+    const handleAddQuantity = () => {
+        setQuantity(quantity+1)
+    } 
+
+    const handleRemoveQuantity = () => {
+        if (quantity <= 1 ) {
+            return
+        }
+
+        setQuantity(quantity-1)
     }
 
     return (
@@ -67,6 +83,24 @@ export function ProductItemPage() {
                                 </div>
 
                                 <p>{product.description}</p>
+                                <div className={styles.quantityContent}>
+                                    <p>
+                                        Quantidade:
+                                    </p>
+                                    <div className={styles.addRemove}>
+                                        <span>
+                                            <Minus onClick={handleRemoveQuantity}/>
+                                        </span>
+                                        <input 
+                                            type="number" 
+                                            value={quantity}
+                                            onChange={(e) => setQuantity(parseInt(e.target.value))} 
+                                        />
+                                        <span>
+                                            <Plus onClick={handleAddQuantity}/> 
+                                        </span> 
+                                    </div> 
+                                </div>
                                 
                                 {cart?.id && <button onClick={handleAddCart}>Adicionar ao carrinho</button>}
                             </div>

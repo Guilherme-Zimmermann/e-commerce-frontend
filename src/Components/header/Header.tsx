@@ -41,13 +41,13 @@ export function Header() {
                 <button type="submit" title="Pesquisar"> <MagnifyingGlass size={32}/> </button>
             </form>
             <div className={styles.userContent}>
-                {user?.role === "ADMIN" && <a href="/admin">ADMIN PANEL</a>}
+                {user?.role === "ADMIN" && <a href="/admin" className={styles.admin}>ADMIN PANEL</a>}
                 <a href="/minha-conta" title="Perfil"> 
                     <User size={32}/> 
                 </a>
                 <a href="/meu-carrinho" title="Carrinho"> 
                     <ShoppingCart size={32}/>
-                    <span>{cartItem.length}</span>
+                    <span>{cartItem.filter(item => item.status === "PENDING").length}</span>
                 </a>
             </div>
         </header>

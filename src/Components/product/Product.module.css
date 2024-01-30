@@ -10,6 +10,27 @@
     box-shadow: 3px 3px 10px rgb(0, 0, 0, 0.2);
 }
 
+.loadingPopUp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 25rem;
+    height: 15rem;
+    padding: 20px;
+
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    
+    transform: translate(-50%, -50%); 
+    background-color: var(--gray-100);
+    box-shadow: 3px 3px 10px rgb(0, 0, 0, 0.2);
+    border-radius: 16px;
+    
+    z-index: 1000;
+}
+
 .header {
     display: flex;
     justify-content: space-between;

@@ -36,7 +36,7 @@
 }
 
 .shoppingContent, .addressContent {
-    height: calc(100vh - 12rem);
+    min-height: calc(100vh - 12rem);
     padding: 2rem;
 
     background-color: var(--white);
@@ -47,6 +47,37 @@
 
 .emptyShopping, .emptyAddress {
     padding: 4rem;
+    text-align: center;
+}
+
+.tableContent {
+    overflow-x: auto;
+}
+
+.tableContent table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableContent th, td {
+    padding: 15px;
+    text-align: left;
+}
+
+.tableContent img {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 16px;
+    box-shadow: 3px 3px 10px rgb(0, 0, 0, 0.2);
+}
+.tableContent td:nth-child(1) {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tableContent th:nth-child(2), .tableContent td:nth-child(2),
+.tableContent th:nth-child(3), .tableContent td:nth-child(3) {
     text-align: center;
 }
 
@@ -176,4 +207,22 @@
 .btnSaveAddress {
     width: 50%;
     align-self: center;
+}
+
+@media (max-width: 724px) {
+    .container {
+        flex-direction: column;
+    }
+    .navBar {
+        width: fit-content;
+    }
+    .shoppingContent {
+        width: 100%;
+    }
+    .addressContent {
+        width: 100%;
+    }
+    .address {
+        width: 100%;
+    }
 }

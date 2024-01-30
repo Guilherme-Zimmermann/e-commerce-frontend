@@ -25,7 +25,7 @@
     font-size: 1rem;
     font-weight: 500;
 
-    width: 43rem;
+    width: 40rem;
     padding: 1rem;
     gap: 0.5rem;
     color: var(--gray-400);
@@ -103,3 +103,49 @@
 .userContent span {
     transform: translateX(-20%) translateY(-50%);
 }
+
+@media (max-width: 480px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .logo {
+        align-self: flex-start;
+        margin-bottom: 1rem;
+    }
+    .logo, .userContent, .searchBar {
+        width: 100%;
+        align-self: start;
+    }
+}
+
+
+@media (max-width: 1024px) {
+    .container {
+        flex-wrap: wrap;
+    }
+    .logo {
+        width: 50%;
+        order: 1;
+    }
+    .userContent {
+        width: 50%;
+        justify-content: flex-end;
+        order: 2;
+    }
+    .searchBar {
+        margin-top: 1rem;
+        width: 100%;
+        order: 3;
+        display: flex;
+        justify-content: center; /* Centraliza a barra de pesquisa */
+    }
+
+    .searchBar input {
+        width: 100%;
+    }
+}
+
+
+
+

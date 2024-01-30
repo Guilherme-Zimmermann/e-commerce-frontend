@@ -4,6 +4,7 @@ import axios from "axios"
 import { Link, useLocation, useParams } from "react-router-dom"
 import { Category } from "../category/Category"
 import { baseUrl } from "../../main"
+import { useCart } from "../../hooks/useCart"
 
 export interface Product {
     id: string
@@ -19,12 +20,25 @@ export interface Product {
 export function Product({ filtered, quantityInView, lessGap } : { filtered?: string, quantityInView?: number, lessGap? : boolean }) {
     const { query, categoria } = useParams()
     const location = useLocation()
+    const { cart, addToCart, isLoading } = useCart()
 
     const { data } = useQuery<Product[]>("products", async () => {
         const response = await axios.get(baseUrl+"/api/product")
 
         return response.data
     })
+
+    const handleAddCart = (productId: string, e: React.FormEvent) => {
+        e.preventDefault()
+
+        const product = data?.find(item => item.id === productId)
+
+        if(!product || !cart) {
+            return null
+        }
+
+        addToCart(1, product.price, cart.id, product.id)
+    }
 
     const keywords = query ? query.split(' ') : []
     const filteredData = data?.filter(product => 
@@ -42,6 +56,7 @@ export function Product({ filtered, quantityInView, lessGap } : { filtered?: str
 
     return (
         <div className={styles.container}>
+            { isLoading && <div className={styles.loadingPopUp}>Carregando...</div> }
             { query ? <p>Resultados da pesquisa: {query}</p> : null}
             <header className={styles.header}>
                 {filtered ? <h2>{filtered}</h2> : <h2>Nossos produtos</h2>}
@@ -64,10 +79,7 @@ export function Product({ filtered, quantityInView, lessGap } : { filtered?: str
                                     </div>
                                 </div>
                                 <button
-                                    onClick={(e) => {
-                                    e.stopPropagation()
-                                    e.preventDefault()
-                                }}>
+                                    onClick={(e) => handleAddCart(product.id, e)}>
                                     Adicionar ao carrinho
                                 </button>
                             </li>
