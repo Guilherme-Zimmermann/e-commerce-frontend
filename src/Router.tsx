@@ -16,11 +16,11 @@ import { ProfileShopping } from "./pages/profile/ProfileShopping"
 import { ProfileAddress } from "./pages/profile/ProfileAddress"
 import { Cart } from "./pages/cart/Cart"
 
-
 const Private = ({ Item }: any) => {
     const { signed, loading }: any = useAuth()
     const navigate = useNavigate()
-    
+  
+
     if (loading) {
         return <div>Carregando...</div>
     }
@@ -32,6 +32,7 @@ const Private = ({ Item }: any) => {
     
     return <Item />
 }
+
 
 export function Router() {
     return (
