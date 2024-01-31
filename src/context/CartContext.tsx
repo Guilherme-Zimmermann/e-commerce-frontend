@@ -65,11 +65,9 @@ export const CartProvider = ({ children }: any) => {
 
     // Fetch CartItem
     useEffect(() => {
-        setIsLoading(true)
         async function fetchCartItem() {
             const response = await axios.get(baseUrl+`/api/cartitem/${cart?.id}`)
             setCartItem(response.data)
-            setIsLoading(false)
         }
 
         fetchCartItem()

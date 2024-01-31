@@ -90,23 +90,24 @@ export const AuthProvider = ({ children }: any) => {
                 if (response.data) {
                     setUser(userResponse.data)
                 } else {
-                    console.log("Deu erro ao entrar")
+                    throw new Error("Falha na autenticação")
                 }
             }
         } catch (err) {
             console.log("Deu ruim " + err)
+            throw err
         }
     }
 
     const signUp = async (name: string, email: string, password: string) => {
         try {
             const response = await axios.post(baseUrl+"/auth/register", {name, email, password})
-
-            if (response.status === 200) {
-                console.log("Cadastrou")
+            if (response.status !== 200) {
+                throw new Error("O email inserido já foi cadastrado")
             }
         } catch (err) {
             console.log("Deu ruim no cadastro" + err)
+            throw err
         }
     }
 

@@ -8,19 +8,29 @@ export function SignUp() {
     const [ nameSignUp, setNameSignUp ] = useState("")
     const [ emailSignUp, setEmailSignUp ] = useState("")        
     const [ passwordSignUp, setPasswordSignUp ] = useState("")        
+    const [ error, setError ] = useState("")
 
     const { signUp }: AuthContextType = useAuth();
     const navigate = useNavigate()
 
-    const handleSingup = (e: React.FormEvent) => {
+    const handleSingup = async (e: React.FormEvent) => {
         e.preventDefault()
         if (!nameSignUp || !emailSignUp || !passwordSignUp) {
             return
         }
 
+        if (passwordSignUp.length < 6) {
+            setError('A senha deve ter mais de 6 dígitos.');
+            return
+        }
 
-        signUp(nameSignUp, emailSignUp, passwordSignUp)
-        navigate("/checkout")
+        try {
+            await signUp(nameSignUp, emailSignUp, passwordSignUp);
+                window.alert("Você se cadastrou com sucesso");
+                navigate("/checkout");
+        } catch (error) {
+            setError("O email inserido já foi cadastrado")   
+        }
     }
 
     return(
@@ -40,13 +50,14 @@ export function SignUp() {
                         onChange={(e) => setEmailSignUp(e.target.value)} 
                     />
                     <input 
-                        type="text"
+                        type="password"
                         placeholder="Senha"
                         value={passwordSignUp}
                         onChange={(e) => setPasswordSignUp(e.target.value)}
                     />
                 </div>
                 <button onClick={handleSingup}>Cadastrar</button>
+                {error && <p style={{color: "red"}}>{error}</p>}
                 <span> 
                     Voltar para o <Link to="/checkout">Login</Link>
                 </span>
