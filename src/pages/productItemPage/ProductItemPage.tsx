@@ -102,7 +102,7 @@ export function ProductItemPage() {
                                     </div> 
                                 </div>
                                 
-                                {cart?.id && <button onClick={handleAddCart}>Adicionar ao carrinho</button>}
+                                <button onClick={handleAddCart}>Adicionar ao carrinho</button>
                             </div>
                         </>
                     )
