@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react"
-import { Product } from "../components/product/Product"
+import { Product } from "../components/productComponent/Product"
 import { useAuth } from "../hooks/useAuth"
 import axios from "axios"
 import { baseUrl } from "../main"

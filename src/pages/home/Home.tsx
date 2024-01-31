@@ -1,5 +1,5 @@
 import { Category} from "../../components/category/Category";
-import { Product } from "../../components/product/Product";
+import { Product } from "../../components/productComponent/Product";
 
 
 export function Home() {
