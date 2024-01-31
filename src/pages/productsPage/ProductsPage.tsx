@@ -1,4 +1,4 @@
-import { Product } from "../../components/productComponent/Product";
+import { Product } from "../../components/product/Product";
 import { Category } from "../../components/category/Category";
 
 import styles from "./ProductsPage.module.css"

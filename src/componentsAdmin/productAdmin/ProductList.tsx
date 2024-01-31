@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Product } from '../../components/productComponent/Product';
+import { Product } from '../../components/product/Product';
 import axios from 'axios';
 import styles from "./ProductList.module.css"
 import { Category } from '../../components/category/Category';

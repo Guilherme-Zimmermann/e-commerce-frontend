@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import styles from "./ProductIemPage.module.css"
 import axios from "axios";
-import { Product } from "../../components/productComponent/Product";
+import { Product } from "../../components/product/Product";
 import { useParams } from "react-router-dom";
 import { baseUrl } from "../../main";
 import { useCart } from "../../hooks/useCart";
