@@ -1,10 +1,11 @@
 import { useQuery } from "react-query"
 import styles from "./Product.module.css"
 import axios from "axios"
-import { Link, useLocation, useParams } from "react-router-dom"
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
 import { Category } from "../category/Category"
 import { baseUrl } from "../../main"
 import { useCart } from "../../hooks/useCart"
+import { useAuth } from "../../hooks/useAuth"
 
 export interface Product {
     id: string
@@ -19,8 +20,10 @@ export interface Product {
 
 export function Product({ filtered, quantityInView, lessGap } : { filtered?: string, quantityInView?: number, lessGap? : boolean }) {
     const { query, categoria } = useParams()
-    const location = useLocation()
     const { cart, addToCart, isLoading } = useCart()
+    const { signed } = useAuth()
+    const navigate = useNavigate()
+    const location = useLocation()
 
     const { data } = useQuery<Product[]>("products", async () => {
         const response = await axios.get(baseUrl+"/api/product")
@@ -30,6 +33,11 @@ export function Product({ filtered, quantityInView, lessGap } : { filtered?: str
 
     const handleAddCart = (productId: string, e: React.FormEvent) => {
         e.preventDefault()
+
+        if (!signed) {
+            navigate("/checkout")
+            return
+        }
 
         const product = data?.find(item => item.id === productId)
 

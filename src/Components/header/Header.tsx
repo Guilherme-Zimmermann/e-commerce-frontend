@@ -10,7 +10,7 @@ import { useCart } from "../../hooks/useCart"
 export function Header() {
     const navigate = useNavigate()
     const { search, setSearch } = useContext(SearchContext)
-    const { user } = useAuth()
+    const { user, signed } = useAuth()
     const { cartItem } = useCart()
 
     const handleSubmit = (e : React.FormEvent) => {
@@ -45,7 +45,7 @@ export function Header() {
                 <a href="/minha-conta" title="Perfil"> 
                     <User size={32}/> 
                 </a>
-                <a href="/meu-carrinho" title="Carrinho"> 
+                <a href={signed ? "/meu-carrinho" : "/checkout"} title="Carrinho"> 
                     <ShoppingCart size={32}/>
                     <span>{cartItem.filter(item => item.status === "PENDING").length}</span>
                 </a>

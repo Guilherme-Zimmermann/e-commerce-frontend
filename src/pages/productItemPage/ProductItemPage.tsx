@@ -2,16 +2,19 @@ import { useEffect, useState } from "react"
 import styles from "./ProductIemPage.module.css"
 import axios from "axios";
 import { Product } from "../../components/product/Product";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { baseUrl } from "../../main";
 import { useCart } from "../../hooks/useCart";
 import { Minus, Plus } from "phosphor-react";
+import { useAuth } from "../../hooks/useAuth";
 
 export function ProductItemPage() {
     const { id } = useParams() 
-    const [ product, setProduct ] = useState<Product>();
     const { cart, addToCart, isLoading } = useCart()
-
+    const { signed } = useAuth()
+    const navigate = useNavigate()
+    
+    const [ product, setProduct ] = useState<Product>();
     const [ quantity, setQuantity ] = useState(1)
 
     useEffect(() => {
@@ -25,6 +28,11 @@ export function ProductItemPage() {
 
     const handleAddCart = (e: React.FormEvent) => {
         e.preventDefault()
+
+        if (!signed) {
+            navigate("/checkout")
+            return
+        }
 
         if(!product || !cart) {
             return null
