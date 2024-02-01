@@ -5,7 +5,7 @@ import App from './App.tsx'
 import './global.css'
 import { queryClient } from './services/queryClient.ts'
 
-export const baseUrl = "http://localhost:8080"
+export const baseUrl = "https://ecommerce-project-jmvw.onrender.com"
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
