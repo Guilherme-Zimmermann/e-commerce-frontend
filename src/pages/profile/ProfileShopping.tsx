@@ -1,17 +1,24 @@
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import styles from "./Profile.module.css"
 import { CartContext } from "../../context/CartContext"
 import { baseUrl } from "../../main"
 
 export function ProfileShopping() {
-    const { cartItem, isLoading } = useContext(CartContext)
+    const { cartItem } = useContext(CartContext)
+    const [ loading, setLoading ] = useState(true)
 
+    useEffect(() => {
+        if (cartItem.length > 0) {
+            setLoading(false)
+        }
+    }, [cartItem])
+    
     return (
         <div className={styles.shoppingContent}>
             <h2>Minhas compras</h2>
             
-            { isLoading ? (
-                <div className={styles.loadingPopUp}>Carregando...</div>
+            { loading ? (
+                <div className={styles.emptyShopping}>Carregando...</div>
             ) : cartItem.filter(item => item.status === "COMPLETED").length > 0 ?
                 <div className={styles.tableContent}>
                     <table>

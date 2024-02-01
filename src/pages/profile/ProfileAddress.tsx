@@ -28,13 +28,20 @@ export function ProfileAddress() {
     const [ address, setAddress ] = useState<Address | null>(null)
 
     const [ editAddress, setEditAddress ] = useState<Address | null>(null)
+    const userToken = localStorage.getItem("user_token")
 
     // Fetch endereço
     useEffect(() => {
         async function fetchAddress() {
-            const response = await axios.get(baseUrl+`/api/address/user/${user?.id}`)
-            setAddress(response.data)
-            setLoading(false)
+            if (userToken) {
+                const response = await axios.get(baseUrl+`/api/address/user/${user?.id}`, {
+                    headers: {
+                        "Authorization": `Bearer ${userToken}`
+                    }
+                })
+                setAddress(response.data)
+                setLoading(false)
+            }
         }
         
         fetchAddress()
@@ -60,7 +67,11 @@ export function ProfileAddress() {
             user: {id: user?.id || ""}
         }
 
-        await axios.post(baseUrl+"/api/address", handleInsertAddress)
+        await axios.post(baseUrl+"/api/address", handleInsertAddress, {
+            headers: {
+                "Authorization": `Bearer ${userToken}`
+            }
+        })
         .then((response) => {
             setAddress(response.data)
             setShowForm(false)
@@ -82,7 +93,11 @@ export function ProfileAddress() {
             zipCode : editAddress?.zipCode || "",
         }
 
-        await axios.put(baseUrl+`/api/address/${address?.id}`, handleEditAddress)
+        await axios.put(baseUrl+`/api/address/${address?.id}`, handleEditAddress, {
+            headers: {
+                "Authorization": `Bearer ${userToken}`
+            }
+        })
         .then((response) => {
             setAddress(response.data)
             setEditAddress(null)
@@ -100,14 +115,20 @@ export function ProfileAddress() {
         if (!userConfirmation) {
             return
         }
-
-        await axios.delete(baseUrl+`/api/address/${address?.id}`)
-        .then(() => {
-            setAddress(null)
-        })
-        .catch(() => {
-            console.log("Deu ruim")
-        })
+        
+        if (userToken) {
+            await axios.delete(baseUrl+`/api/address/${address?.id}`, {
+                headers: {
+                    "Authorization": `Bearer ${userToken}` 
+                }
+            })
+            .then(() => {
+                setAddress(null)
+            })
+            .catch(() => {
+                console.log("Deu ruim")
+            })
+        }
     }
 
     // Fechar formulário de edição de endereço

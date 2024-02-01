@@ -45,7 +45,7 @@ export function Product({ filtered, quantityInView, lessGap } : { filtered?: str
             return null
         }
 
-        addToCart(1, product.price, cart.id, product.id)
+            addToCart(1, product.price, cart.id, product.id)
     }
 
     const keywords = query ? query.split(' ') : []

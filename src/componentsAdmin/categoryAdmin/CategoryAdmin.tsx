@@ -7,6 +7,8 @@ export function CategoryAdmin() {
     const [ newCategory, setNewCategory ] = useState('')
     const [ newImage, setNewImage ] = useState<File | null>(null)
 
+    const userToken = localStorage.getItem("user_token")
+
     async function handleCreateNewCategory(event: React.FormEvent) {
         event.preventDefault()
 
@@ -20,7 +22,11 @@ export function CategoryAdmin() {
             formData.append('image', newImage)
         }
 
-        await axios.post(baseUrl+"/api/category", formData)
+        await axios.post(baseUrl+"/api/category", formData, {
+            headers: {
+                "Authorization": `Bearer ${userToken}`
+            }
+        }) 
         .then((response) => {
             console.log(response.data)
             console.log("Deu bom")

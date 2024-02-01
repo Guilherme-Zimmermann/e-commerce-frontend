@@ -15,6 +15,7 @@ export function ProductAdmin() {
     })
     const [ image, setImage ] = useState<File | null>(null)
     const [ categories, setCategories ] = useState<Category[]>([])
+    const userToken = localStorage.getItem("user_token")
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setForm({
@@ -38,7 +39,11 @@ export function ProductAdmin() {
         formData.append("image", image)
         formData.append("category", form.category)
 
-        await axios.post(baseUrl+"/api/product", formData)     
+        await axios.post(baseUrl+"/api/product", formData, {
+            headers: {
+                "Authorization": `Bearer ${userToken}`
+            }
+        })     
         .then( async (response) => {
             alert("Salvo com sucesso!")
             console.log(response.data)

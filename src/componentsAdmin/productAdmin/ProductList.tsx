@@ -11,6 +11,7 @@ export function ProductList() {
 
     const [ editProduct, setEditProduct ] = useState<{ price: string; [key: string]: any } | Product | null>(null)
     const [editImage, setEditImage] = useState<File | null>(null)
+    const userToken = localStorage.getItem("user_token")
 
     // Fetch produtos
     useEffect(() => {
@@ -50,7 +51,11 @@ export function ProductList() {
 
         console.log(editProduct.category.id)
 
-        await axios.put(baseUrl+`/api/product/${editProduct.id}`, formData)
+        await axios.put(baseUrl+`/api/product/${editProduct.id}`, formData, {
+            headers: {
+                "Authorization": `Bearer ${userToken}`
+            }
+        })
         .then((response) => {
             console.log(response.data)
             alert("Produto editado com sucesso")
@@ -66,7 +71,11 @@ export function ProductList() {
 
     // Deletar produto
     const handleDelete = async (productId: string) => {
-        await axios.delete(baseUrl+`/api/product/${productId}`)
+        await axios.delete(baseUrl+`/api/product/${productId}`, {
+            headers: {
+                "Authorization": `Bearer ${userToken}`
+            }
+        })
         .then(() => {
             alert("Deletado com sucesso")
             setProducts(products.filter(p => p.id !== productId))
@@ -78,37 +87,39 @@ export function ProductList() {
 
     return (
         <div className={styles.container}>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nome do produto</th>
-                        <th>Descrição</th>
-                        <th>Preço</th>
-                        <th>Tamanho</th>
-                        <th>Categoria</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {products.map(product => {
-                        const imageUrl = `${baseUrl}/api/product/image/${product.nameImage}`;
-                        return (
-                        <tr key={product.id}>
-                            <td>{product.name}</td>
-                            <td>{product.description}</td>
-                            <td>{product.price.toFixed(2)}</td>
-                            <td>{product.sizeP}</td>
-                            <td><img src={imageUrl} alt="" /></td>
-                            <td>{product.category.name}</td>
-                            <td className={styles.btns}>
-                                <button onClick={() => setEditProduct(product)}>Editar</button>
-                                <button onClick={() => handleDelete(product.id)}>Apagar</button>
-                            </td>
+            <div className={styles.tableContent}>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome do produto</th>
+                            <th>Descrição</th>
+                            <th>Preço</th>
+                            <th>Tamanho</th>
+                            <th>Categoria</th>
+                            <th>Ações</th>
                         </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {products.map(product => {
+                            const imageUrl = `${baseUrl}/api/product/image/${product.nameImage}`;
+                            return (
+                                <tr key={product.id}>
+                                <td>{product.name}</td>
+                                <td>{product.description}</td>
+                                <td>{product.price.toFixed(2)}</td>
+                                <td>{product.sizeP}</td>
+                                <td><img src={imageUrl} alt="" /></td>
+                                <td>{product.category.name}</td>
+                                <td className={styles.btns}>
+                                    <button onClick={() => setEditProduct(product)}>Editar</button>
+                                    <button onClick={() => handleDelete(product.id)}>Apagar</button>
+                                </td>
+                            </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+            </div>
             {editProduct && (
                 <form onSubmit={handleEditSubmit}>
                     <div>
@@ -117,7 +128,7 @@ export function ProductList() {
                             type="text" 
                             value={editProduct.name} 
                             onChange={(e) => setEditProduct({ ...editProduct, name: e.target.value })} 
-                        />
+                            />
                     </div>
                     <div>
                         <label htmlFor="">Descrição</label>

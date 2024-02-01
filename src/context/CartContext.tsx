@@ -53,10 +53,16 @@ export const CartProvider = ({ children }: any) => {
     const [ cartItem, setCartItem ] = useState<CartItem[]>([])
     const [ isLoading, setIsLoading ] = useState(false)
 
+    const userToken = localStorage.getItem("user_token")
+
     // Fetch Cart
     useEffect(() => {
         async function fetchCart() {
-            const response = await axios.get(baseUrl+`/api/cart/user/${user?.id}`)
+            const response = await axios.get(baseUrl+`/api/cart/user/${user?.id}`, {
+                headers: {
+                    "Authorization": `Bearer ${userToken}`
+                }
+            })
             setCart(response.data)
         }
 
@@ -66,7 +72,11 @@ export const CartProvider = ({ children }: any) => {
     // Fetch CartItem
     useEffect(() => {
         async function fetchCartItem() {
-            const response = await axios.get(baseUrl+`/api/cartitem/${cart?.id}`)
+            const response = await axios.get(baseUrl+`/api/cartitem/${cart?.id}`, {
+                headers: {
+                    "Authorization": `Bearer ${userToken}`
+                }
+            })
             setCartItem(response.data)
         }
 
@@ -83,7 +93,11 @@ export const CartProvider = ({ children }: any) => {
             window.alert("Esse produto já foi adicionado ao carrinho")
         } else {
 
-            await axios.post(baseUrl+"/api/cartitem", {quantity, price, cart, product})
+            await axios.post(baseUrl+"/api/cartitem", {quantity, price, cart, product}, {
+                headers: {
+                    "Authorization": `Bearer ${userToken}`
+                }
+            })
             .then( async (response) => {
                 console.log(response.data)
                 window.alert("Produto adicionado com sucesso!")
@@ -102,7 +116,11 @@ export const CartProvider = ({ children }: any) => {
         const existCartItem = cartItem.find(item => item.product.id === productId)
 
         if (existCartItem) {
-            await axios.put(baseUrl+`/api/cartitem/${cartId}/${productId}`, {quantity, price, cart, product}) 
+            await axios.put(baseUrl+`/api/cartitem/${cartId}/${productId}`, {quantity, price, cart, product}, {
+                headers: {
+                    "Authorization": `Bearer ${userToken}`
+                }
+            }) 
             .then((response) => {
                 console.log(response.data)
                 setCartItem(currentCart => currentCart.map(item => item.product.id === productId ? {...item, quantity} : item));
@@ -115,7 +133,11 @@ export const CartProvider = ({ children }: any) => {
 
     const removeFromCart = async (cartId: string, productId: string) => {
         setIsLoading(true)
-        await axios.delete(baseUrl+`/api/cartitem/${cartId}/${productId}`)
+        await axios.delete(baseUrl+`/api/cartitem/${cartId}/${productId}`, {
+            headers: {
+                "Authorization": `Bearer ${userToken}`
+            }
+        })
         .then (() => {
             setCartItem(currentItems => currentItems.filter(item => item.product.id !== productId));
             const total = cartItem.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -128,7 +150,11 @@ export const CartProvider = ({ children }: any) => {
     const checkout = async (items: CartItemPK[]) => {
         setIsLoading(true)
         if (items.length > 0) {
-            await axios.put(baseUrl+"/api/cartitem/checkout", items)
+            await axios.put(baseUrl+"/api/cartitem/checkout", items, {
+                headers: {
+                    "Authorization": `Bearer ${userToken}`
+                }
+            })
             .then (() => {
                 setCartItem([])
                 window.alert("Compra finalizada com sucesso!")
