@@ -6,6 +6,7 @@ import { Category } from "../category/Category"
 import { baseUrl, baseUrlImages } from "../../main"
 import { useCart } from "../../hooks/useCart"
 import { useAuth } from "../../hooks/useAuth"
+import { useEffect } from "react"
 
 export interface Product {
     id: string
@@ -30,6 +31,20 @@ export function Product({ filtered, quantityInView, lessGap } : { filtered?: str
 
         return response.data
     })
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+          fetch(baseUrl+"/api/product")
+            .then(response => response.json())
+            .then(() => console.log("Foi"))
+            .catch((error) => {
+              console.error('Erro:', error);
+            });
+        }, 180000); // 180000 milissegundos equivalem a 3 minutos
+      
+        // Limpar intervalo quando o componente for desmontado
+        return () => clearInterval(interval);
+      }, []);
 
     const handleAddCart = (productId: string, e: React.FormEvent) => {
         e.preventDefault()
