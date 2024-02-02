@@ -23,6 +23,7 @@ export function SignIn() {
             await signIn(emailSignIn, passwordSignIn)
             navigate("/minha-conta")
         } catch (error) {
+            setPasswordSignIn("")
             setError("Email ou senha inválidos")
         }
     }
@@ -41,7 +42,12 @@ export function SignIn() {
                         type="password"
                         placeholder="Senha"
                         value={passwordSignIn}
-                        onChange={(e) => setPasswordSignIn(e.target.value)}
+                        onChange={(e) => {
+                            setPasswordSignIn(e.target.value)
+                            if (error) {
+                                setError("")
+                            }
+                        }}
                     />
                 </div>
 

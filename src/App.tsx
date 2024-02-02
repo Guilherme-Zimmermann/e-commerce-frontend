@@ -43,8 +43,8 @@ function App() {
                 <p>
                   Embora você possa navegar pelos produtos, por favor, esteja ciente de que não é possível efetuar 
                   compras reais neste momento.
-                  Estamos felizes em apresentar uma variedade de produtos fictícios e experiências de compra 
-                  simuladas para destacar nosso trabalho.
+                  Estou feliz em apresentar uma variedade de produtos fictícios e experiências de compra 
+                  simuladas para destacar meu trabalho.
                 </p>
                 <p>
                   Se você tiver alguma dúvida ou feedback, não hesite em entrar em contato. Agradeço 

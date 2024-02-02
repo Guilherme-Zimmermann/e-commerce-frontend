@@ -8,7 +8,7 @@ export function ProfileShopping() {
     const [ loading, setLoading ] = useState(true)
 
     useEffect(() => {
-        if (cartItem.length > 0) {
+        if (cartItem.length > 0 || cartItem.length == 0) {
             setLoading(false)
         }
     }, [cartItem])

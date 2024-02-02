@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }: any) => {
     const signIn = async ( email: string, password: string ) => {
         try {
             const response = await axios.post(baseUrl+"/auth/login", {email, password})
-
+            
             if (response.status === 200) {
                 const { token } = response.data;
                 localStorage.setItem("user_token", token)
@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }: any) => {
                         'Authorization': `Bearer ${token}`
                     }
                 })
-            
+
                 if (response.data) {
                     setUser(userResponse.data)
                 } else {

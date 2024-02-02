@@ -16,7 +16,7 @@ export function ProductAdmin() {
     
     const [ categories, setCategories ] = useState<Category[]>([])
     const userToken = localStorage.getItem("user_token")
-
+    
     const handleCreateNewProduct = async (e: React.FormEvent) => {
         e.preventDefault()
 
@@ -26,7 +26,6 @@ export function ProductAdmin() {
         }
 
         if (!image?.name) return
-
         const newProduct: {} = {
             name: productName,
             description: productDescription,
@@ -35,7 +34,7 @@ export function ProductAdmin() {
             nameImage: image.name,
             category: {id: newCategory},
         }
-
+        console.log(newProduct)
         await axios.post(baseUrl+"/api/product", newProduct, {
             headers: {
                 "Authorization": `Bearer ${userToken}`
@@ -120,7 +119,7 @@ export function ProductAdmin() {
                             required
                             >
                             {categories.map((category) => (
-                                <option key={category.id} value={category.id}>
+                                <option key={category.id} value={category.id} onChange={() => setNewCategory(category.id)}>
                                     {category.name}
                                 </option>
                             ))}

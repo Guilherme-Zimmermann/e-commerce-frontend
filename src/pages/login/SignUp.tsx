@@ -15,12 +15,27 @@ export function SignUp() {
 
     const handleSingup = async (e: React.FormEvent) => {
         e.preventDefault()
-        if (!nameSignUp || !emailSignUp || !passwordSignUp) {
+
+        // Validação do nome
+        const nameRegex = /^[a-zA-Z\s]*$/;
+        if (!nameSignUp.trim() || !nameRegex.test(nameSignUp)) {
+            setError('O nome não pode estar vazio ou conter caracteres especiais.');
+            setNameSignUp("")
+            return
+    }
+
+        // Validação do email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailSignUp)) {
+            setError('Por favor, insira um email válido.');
+            setEmailSignUp("")
             return
         }
 
+        // Validação da senha
         if (passwordSignUp.length < 6) {
             setError('A senha deve ter mais de 6 dígitos.');
+            setPasswordSignUp("")
             return
         }
 
@@ -41,19 +56,34 @@ export function SignUp() {
                         type="text" 
                         placeholder="Nome"
                         value={nameSignUp}
-                        onChange={(e) => setNameSignUp(e.target.value)}
+                        onChange={(e) => {
+                            setNameSignUp(e.target.value) 
+                            if(error) {
+                                setError("")
+                            }
+                        }}
                     />
                     <input 
                         type="email"
                         placeholder="Email"
                         value={emailSignUp}
-                        onChange={(e) => setEmailSignUp(e.target.value)} 
+                        onChange={(e) => {
+                            setEmailSignUp(e.target.value)
+                            if(error) {
+                                setError("")
+                            }
+                        }} 
                     />
                     <input 
                         type="password"
                         placeholder="Senha"
                         value={passwordSignUp}
-                        onChange={(e) => setPasswordSignUp(e.target.value)}
+                        onChange={(e) => {
+                            setPasswordSignUp(e.target.value)
+                            if(error) {
+                                setError("")
+                            }
+                        }}
                     />
                 </div>
                 <button onClick={handleSingup}>Cadastrar</button>

@@ -20,6 +20,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    overflow-y: auto;
+    max-height: 90vh;
 }
 
 .alert header {
@@ -49,3 +52,18 @@
     background-color: var(--purple-dark);
 }
 
+@media (max-width: 600px) {
+    .alert {
+        width: 80%;
+        padding: 1rem;
+        margin: 1rem;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    .alert {
+        width: 60%;
+        padding: 1.5rem;
+        margin: 1.5rem;
+    }
+}
