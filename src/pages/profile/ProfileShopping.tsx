@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import styles from "./Profile.module.css"
 import { CartContext } from "../../context/CartContext"
-import { baseUrl } from "../../main"
+import { baseUrl, baseUrlImages } from "../../main"
 
 export function ProfileShopping() {
     const { cartItem } = useContext(CartContext)
@@ -31,7 +31,7 @@ export function ProfileShopping() {
                         </thead>
                         <tbody>
                             { cartItem.filter(item => item.status === "COMPLETED").map(item => {
-                                const imageUrl = `${baseUrl}/api/product/image/${item.product.nameImage}`;
+                                const imageUrl = `${baseUrlImages}/product/${item.product.nameImage}`;
                                 return (
                                     <tr key={item.product.id}>
                                         <td>

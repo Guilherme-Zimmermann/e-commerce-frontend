@@ -1,6 +1,6 @@
 import { Minus, Plus, X } from "phosphor-react"
 import { useCart } from "../../hooks/useCart"
-import { baseUrl } from "../../main"
+import { baseUrl, baseUrlImages } from "../../main"
 import styles from "./Cart.module.css"
 import { CartItemPK } from "../../context/CartContext"
 
@@ -88,7 +88,7 @@ export function Cart() {
                             ) : cartItem.filter(item => item.status === "PENDING").length === 0 ? (
                                 <div>Seu carrinho está vazio</div>
                             ) : cartItem.filter(item => item.status === "PENDING").map(item => {
-                                const imageUrl = `${baseUrl}/api/product/image/${item.product.nameImage}`;
+                                const imageUrl = `${baseUrlImages}/product/${item.product.nameImage}`;
                                 return (
                                     <tr key={item.product.id}>
                                         <td>
