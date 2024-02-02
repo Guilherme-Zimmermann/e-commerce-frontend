@@ -10,7 +10,7 @@ export const baseUrl = "https://ecommerce-qzia.onrender.com"
 export const baseUrlImages = "https://unejxaaiizvcupsiyxuy.supabase.co/storage/v1/object/public/images"
 export const supabase = createClient(
     'https://unejxaaiizvcupsiyxuy.supabase.co',
-    process.env.SUPABASE_KEY as string
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVuZWp4YWFpaXp2Y3Vwc2l5eHV5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcwNjczNDY1NSwiZXhwIjoyMDIyMzEwNjU1fQ.ikNDaBMA04XBmrJVsTQ9Q2K3LMktiCWwQPm8kBRJbaY"
   )
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
