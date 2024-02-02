@@ -1,6 +1,6 @@
 import { Minus, Plus, X } from "phosphor-react"
 import { useCart } from "../../hooks/useCart"
-import { baseUrl, baseUrlImages } from "../../main"
+import { baseUrlImages } from "../../main"
 import styles from "./Cart.module.css"
 import { CartItemPK } from "../../context/CartContext"
 

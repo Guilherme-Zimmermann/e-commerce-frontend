@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import styles from "./Profile.module.css"
 import { CartContext } from "../../context/CartContext"
-import { baseUrl, baseUrlImages } from "../../main"
+import { baseUrlImages } from "../../main"
 
 export function ProfileShopping() {
     const { cartItem } = useContext(CartContext)
