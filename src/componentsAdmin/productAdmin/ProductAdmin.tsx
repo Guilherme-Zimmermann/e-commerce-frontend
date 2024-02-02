@@ -1,64 +1,51 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import styles from "./ProductAdmin.module.css"
 import axios from "axios"
 import { Category } from "../../components/category/Category"
 import { ProductList } from "./ProductList"
-import { baseUrl } from "../../main"
+import { baseUrl, supabase } from "../../main"
 
 export function ProductAdmin() {
-    const [ form, setForm ] = useState({
-        productName: '',
-        description: '',
-        price: '',
-        sizeP: '',
-        category: ''
-    })
+    const [ productName, setProductName ] = useState('')
+    const [ productDescription, setProductDescription ] = useState('')
+    const [ productPrice, setProductPrice ] = useState('')
+    const [ productSize, setProductSize ] = useState('')
+    const [ newCategory, setNewCategory ] = useState('')
+
     const [ image, setImage ] = useState<File | null>(null)
+    
     const [ categories, setCategories ] = useState<Category[]>([])
     const userToken = localStorage.getItem("user_token")
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        setForm({
-            ...form,
-            [e.target.name]: e.target.value
-        })
-    }
+    const handleCreateNewProduct = async (e: React.FormEvent) => {
+        e.preventDefault()
 
-    async function handleCreateNewProduct(event: React.FormEvent) {
-        event.preventDefault()
-
-        if (!form.productName || !form.description || !form.price || !form.sizeP || !image || !form.category) {
-            return
+        if (image) {
+            const filePath = `product/${image.name}`
+            await supabase.storage.from('images').upload(filePath, image)
         }
 
-        const formData = new FormData()
-        formData.append("name", form.productName)
-        formData.append("description", form.description)
-        formData.append("price", form.price)
-        formData.append("sizeP", form.sizeP)
-        formData.append("image", image)
-        formData.append("category", form.category)
+        if (!image?.name) return
 
-        await axios.post(baseUrl+"/api/product", formData, {
+        const newProduct: {} = {
+            name: productName,
+            description: productDescription,
+            price: productPrice,
+            sizeP: productSize,
+            nameImage: image.name,
+            category: {id: newCategory},
+        }
+
+        await axios.post(baseUrl+"/api/product", newProduct, {
             headers: {
                 "Authorization": `Bearer ${userToken}`
             }
-        })     
-        .then( async (response) => {
-            alert("Salvo com sucesso!")
-            console.log(response.data)
-            setForm({
-                productName: '',
-                description: '',
-                price: '',
-                sizeP: '',
-                category: ''
-            })
-            setImage(null);
-            (event.target as HTMLFormElement).reset();
         })
-        .catch((err) => {
-            console.log("Deu ruim" + err)
+        .then (() => {
+            alert("Produto adicionado com sucesso!")
+        })
+        .catch (() => {
+            alert("Erro ao adicionar o produto!")
         })
     }
 
@@ -80,9 +67,8 @@ export function ProductAdmin() {
                         <label htmlFor="">Nome do produto</label>
                         <input 
                             type="text" 
-                            name="productName"
-                            value={form.productName}
-                            onChange={handleChange}
+                            value={productName}
+                            onChange={(e) => setProductName(e.target.value)}
                             required
                             />
                     </div>
@@ -91,8 +77,8 @@ export function ProductAdmin() {
                         <input 
                             type="text" 
                             name="description"
-                            value={form.description}
-                            onChange={handleChange}
+                            value={productDescription}
+                            onChange={(e) => setProductDescription(e.target.value)}
                             required
                             />
                     </div>
@@ -101,8 +87,8 @@ export function ProductAdmin() {
                         <input
                             type="number"
                             name="price"
-                            value={form.price}
-                            onChange={handleChange}
+                            value={productPrice}
+                            onChange={(e) => setProductPrice(e.target.value)}
                             required
                             />
                     </div>
@@ -111,8 +97,8 @@ export function ProductAdmin() {
                         <input 
                             type="text" 
                             name="sizeP"
-                            value={form.sizeP}
-                            onChange={handleChange}
+                            value={productSize}
+                            onChange={(e) => setProductSize(e.target.value)}
                             required
                             />
                     </div>
@@ -130,11 +116,11 @@ export function ProductAdmin() {
                         <label htmlFor="">Categoria</label>
                         <select 
                             name="category"
-                            onChange={handleChange}
+                            onChange={(e) => setNewCategory(e.target.value)}
                             required
                             >
                             {categories.map((category) => (
-                                <option key={category.id} value={form.category = category.id}>
+                                <option key={category.id} value={category.id}>
                                     {category.name}
                                 </option>
                             ))}

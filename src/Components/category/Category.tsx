@@ -1,7 +1,7 @@
 import axios from "axios"
 import styles from "./Category.module.css"
 import { useQuery } from "react-query"
-import { baseUrl } from "../../main";
+import { baseUrl, baseUrlImages } from "../../main";
 
 export interface Category {
     id: string;
@@ -24,7 +24,7 @@ export function Category() {
             </header>
             <ul className={styles.listCategory}>
                 { data?.map(category => {
-                    const imageUrl = `${baseUrl}/api/category/image/${category.nameImage}`;
+                    const imageUrl = `${baseUrlImages}/category/${category.nameImage}`;
                     return (
                         <a href={`/${category.name}/produtos`} key={category.id}>
                             <li className={styles.itemCategory}>

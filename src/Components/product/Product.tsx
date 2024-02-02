@@ -3,7 +3,7 @@ import styles from "./Product.module.css"
 import axios from "axios"
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
 import { Category } from "../category/Category"
-import { baseUrl } from "../../main"
+import { baseUrl, baseUrlImages } from "../../main"
 import { useCart } from "../../hooks/useCart"
 import { useAuth } from "../../hooks/useAuth"
 
@@ -74,7 +74,7 @@ export function Product({ filtered, quantityInView, lessGap } : { filtered?: str
             </header>
             <ul className={itemProductClass}> 
                 { filteredData?.slice(0, quantityInView).map(product => {
-                    const imageUrl = `${baseUrl}/api/product/image/${product.nameImage}`;
+                    const imageUrl = `${baseUrlImages}/product/${product.nameImage}`;
                     return (
                         <Link to={`/${product.id}/${product.name}`} key={product.id}>
                             <li className={styles.itemProduct}>

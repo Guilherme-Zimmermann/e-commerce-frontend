@@ -3,7 +3,7 @@ import { Product } from '../../components/product/Product';
 import axios from 'axios';
 import styles from "./ProductList.module.css"
 import { Category } from '../../components/category/Category';
-import { baseUrl } from '../../main';
+import { baseUrl, baseUrlImages } from '../../main';
 
 export function ProductList() {
     const [ products, setProducts ] = useState<Product[]>([]);
@@ -101,7 +101,7 @@ export function ProductList() {
                     </thead>
                     <tbody>
                         {products.map(product => {
-                            const imageUrl = `${baseUrl}/api/product/image/${product.nameImage}`;
+                            const imageUrl = `${baseUrlImages}/product/${product.nameImage}`;
                             return (
                                 <tr key={product.id}>
                                 <td>{product.name}</td>

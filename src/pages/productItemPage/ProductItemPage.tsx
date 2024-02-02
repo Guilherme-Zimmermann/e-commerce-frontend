@@ -3,7 +3,7 @@ import styles from "./ProductIemPage.module.css"
 import axios from "axios";
 import { Product } from "../../components/product/Product";
 import { useNavigate, useParams } from "react-router-dom";
-import { baseUrl } from "../../main";
+import { baseUrl, baseUrlImages } from "../../main";
 import { useCart } from "../../hooks/useCart";
 import { Minus, Plus } from "phosphor-react";
 import { useAuth } from "../../hooks/useAuth";
@@ -61,7 +61,7 @@ export function ProductItemPage() {
                 {product && (
                         <>
                             <div className={styles.productImage}>
-                                <img src={baseUrl+`/api/product/image/${product.nameImage}`} alt="" />
+                                <img src={baseUrlImages+`/product/${product.nameImage}`} alt="" />
                             </div>
 
                             <div className={styles.productDescription}>

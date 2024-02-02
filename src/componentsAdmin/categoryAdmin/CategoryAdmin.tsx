@@ -1,54 +1,51 @@
 import { useState } from "react"
 import styles from "./CategoryAdmin.module.css"
 import axios from "axios"
-import { baseUrl } from "../../main"
+import { baseUrl, supabase } from "../../main"
 
 export function CategoryAdmin() {
-    const [ newCategory, setNewCategory ] = useState('')
+    const [ category, setCategory ] = useState('')
     const [ newImage, setNewImage ] = useState<File | null>(null)
 
     const userToken = localStorage.getItem("user_token")
 
-    async function handleCreateNewCategory(event: React.FormEvent) {
-        event.preventDefault()
+    const handleNewCategory = async (e: React.FormEvent) => {
+        e.preventDefault()
 
-        if(!newCategory || !newImage) {
-            return
-        }
-
-        const formData = new FormData()
-        formData.append('name', newCategory)
         if (newImage) {
-            formData.append('image', newImage)
+            const filePath = `category/${newImage.name}`
+            await supabase.storage.from('images').upload(filePath, newImage)
+        }
+        if (!newImage?.name) return
+        
+        const newCategory: {} = {
+            name: category,
+            nameImage: newImage?.name
         }
 
-        await axios.post(baseUrl+"/api/category", formData, {
+        await axios.post(baseUrl+`/api/category`, newCategory, {
             headers: {
                 "Authorization": `Bearer ${userToken}`
             }
-        }) 
-        .then((response) => {
-            console.log(response.data)
-            console.log("Deu bom")
-            setNewCategory('');
-            setNewImage(null);
-            (event.target as HTMLFormElement).reset();
         })
-        .catch((err) => {
-            console.log("Deu ruim" + err)
+        .then(() => {
+            alert("Categoria inserida com sucesso!")
+        })
+        .catch(() => {
+            alert("Erro ao inserir categoria!")
         })
     }
 
     return (
         <div>
-            <form action="" className={styles.inputContent} onSubmit={handleCreateNewCategory}>
+            <form action="" className={styles.inputContent} onSubmit={handleNewCategory}>
                 <div className={styles.inputItem}>
                     <label>Categoria</label>
                     <input 
                         type="text"
                         required
-                        onChange={(e) => setNewCategory(e.target.value)}
-                        value={newCategory}
+                        onChange={(e) => setCategory(e.target.value)}
+                        value={category}
                     />
                 </div>
 

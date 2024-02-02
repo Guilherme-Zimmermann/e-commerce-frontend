@@ -53,7 +53,6 @@ export const AuthProvider = ({ children }: any) => {
             
             fetchUser()
         } else {
-            console.log("Usuário não está logado")
             setLoading(false)
         }
     }, [])
