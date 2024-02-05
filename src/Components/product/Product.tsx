@@ -1,12 +1,12 @@
 import { useQuery } from "react-query"
 import styles from "./Product.module.css"
 import axios from "axios"
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
+import { Link, useLocation, useParams } from "react-router-dom"
 import { Category } from "../category/Category"
 import { baseUrl, baseUrlImages } from "../../main"
 import { useCart } from "../../hooks/useCart"
-import { useAuth } from "../../hooks/useAuth"
 import { useEffect } from "react"
+import { useAuth } from "../../hooks/useAuth"
 
 export interface Product {
     id: string
@@ -23,7 +23,6 @@ export function Product({ filtered, quantityInView, lessGap } : { filtered?: str
     const { query, categoria } = useParams()
     const { cart, addToCart, isLoading } = useCart()
     const { signed } = useAuth()
-    const navigate = useNavigate()
     const location = useLocation()
 
     const { data } = useQuery<Product[]>("products", async () => {
@@ -49,18 +48,42 @@ export function Product({ filtered, quantityInView, lessGap } : { filtered?: str
     const handleAddCart = (productId: string, e: React.FormEvent) => {
         e.preventDefault()
 
-        if (!signed) {
-            navigate("/checkout")
-            return
-        }
-
         const product = data?.find(item => item.id === productId)
 
-        if(!product || !cart) {
+        if(!product) {
             return null
         }
 
-            addToCart(1, product.price, cart.id, product.id)
+        if (!signed) {
+            let currentCartItems = []
+            const cartItemsDataString = localStorage.getItem("cart-items")
+            if (cartItemsDataString) {
+                currentCartItems = JSON.parse(cartItemsDataString)
+            }
+    
+            const newCartItem = {
+                quantity: 1,
+                price: product.price,
+                cart: null,
+                product: product.id
+            }
+    
+            const itemExists = currentCartItems.some((item: any) => item.product === newCartItem.product)
+    
+            if (!itemExists) {
+                const updatedCartItems = [...currentCartItems, newCartItem]
+    
+                localStorage.setItem("cart-items", JSON.stringify(updatedCartItems))
+            } else {
+                alert("Item já adicionado ao carrinho")
+            }
+        }
+
+        if(!cart) {
+            return null
+        }
+
+        addToCart(1, product.price, cart.id, product.id)
     }
 
     const keywords = query ? query.split(' ') : []

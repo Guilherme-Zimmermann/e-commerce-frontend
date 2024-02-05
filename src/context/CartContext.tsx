@@ -47,7 +47,7 @@ export const CartContext = createContext<CartContextType>({
 })
 
 export const CartProvider = ({ children }: any) => {
-    const { user } = useAuth()
+    const { user, signed } = useAuth()
 
     const [ cart, setCart ] = useState<Cart>() 
     const [ cartItem, setCartItem ] = useState<CartItem[]>([])
@@ -88,23 +88,22 @@ export const CartProvider = ({ children }: any) => {
         const cart = { id: cartId}
         const product = { id: productId }
         const existCartItem = cartItem.find(item => item.product.id === productId && item.status === "PENDING")
+
         
         if (existCartItem) {
             window.alert("Esse produto já foi adicionado ao carrinho")
         } else {
-
-            await axios.post(baseUrl+"/api/cartitem", {quantity, price, cart, product}, {
-                headers: {
-                    "Authorization": `Bearer ${userToken}`
-                }
-            })
-            .then( async (response) => {
-                console.log(response.data)
-                window.alert("Produto adicionado com sucesso!")
-            })
-            .catch(() =>{
-                console.log("Deu ruim")
-            })
+                await axios.post(baseUrl+"/api/cartitem", {quantity, price, cart, product}, {
+                    headers: {
+                        "Authorization": `Bearer ${userToken}`
+                    }
+                })
+                .then( async (response) => {
+                    console.log(response.data)
+                })
+                .catch(() =>{
+                    console.log("Deu ruim")
+                })
         }
         setIsLoading(false)
     }
@@ -168,6 +167,21 @@ export const CartProvider = ({ children }: any) => {
         setIsLoading(false)
     }
 
+    useEffect(() => {
+        if (signed && cart) {
+            const cartItemsDataString = localStorage.getItem("cart-items")
+            if (cartItemsDataString) {
+                const cartItemsData = JSON.parse(cartItemsDataString)
+                cartItemsData.forEach((cartItemData: {quantity: number, price: number, cart: {id: string}, product: string}) => {
+                    addToCart(cartItemData.quantity, cartItemData.price, cart?.id, cartItemData.product)
+                })
+                localStorage.removeItem("cart-items")
+            }
+        } else {
+            return
+        }
+    }, [signed, cart])
+    
     return (
         <CartContext.Provider value={{ cart, cartItem, isLoading, addToCart, updateToCart, removeFromCart, checkout }}>
             {children}

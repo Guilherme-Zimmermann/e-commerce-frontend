@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import styles from "./ProductIemPage.module.css"
 import axios from "axios";
 import { Product } from "../../components/product/Product";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { baseUrl, baseUrlImages } from "../../main";
 import { useCart } from "../../hooks/useCart";
 import { Minus, Plus } from "phosphor-react";
@@ -12,7 +12,6 @@ export function ProductItemPage() {
     const { id } = useParams() 
     const { cart, addToCart, isLoading } = useCart()
     const { signed } = useAuth()
-    const navigate = useNavigate()
     
     const [ product, setProduct ] = useState<Product>();
     const [ quantity, setQuantity ] = useState(1)
@@ -28,13 +27,38 @@ export function ProductItemPage() {
 
     const handleAddCart = (e: React.FormEvent) => {
         e.preventDefault()
-
+    
+        if (!product) {
+            return null
+        }
+    
         if (!signed) {
-            navigate("/checkout")
-            return
+            let currentCartItems = []
+            const cartItemsDataString = localStorage.getItem("cart-items")
+            if (cartItemsDataString) {
+                currentCartItems = JSON.parse(cartItemsDataString)
+            }
+    
+            const newCartItem = {
+                quantity: quantity,
+                price: product.price,
+                cart: null,
+                product: product.id,
+                status: "PENDING"
+            }
+    
+            const itemExists = currentCartItems.some((item: any) => item.product === newCartItem.product)
+    
+            if (!itemExists) {
+                const updatedCartItems = [...currentCartItems, newCartItem]
+    
+                localStorage.setItem("cart-items", JSON.stringify(updatedCartItems))
+            } else {
+                alert("Item já adicionado ao carrinho")
+            }
         }
 
-        if(!product || !cart) {
+        if(!cart) {
             return null
         }
 
