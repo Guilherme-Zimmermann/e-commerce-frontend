@@ -23,9 +23,9 @@ function App() {
     }
 
   return (
+  <BrowserRouter >
     <AuthProvider>
       <CartProvider>
-      <BrowserRouter >
         <div className={styles.container}>
           { showAlert && (
             <div className={styles.alert}>
@@ -60,9 +60,9 @@ function App() {
           )}
           <Router />
         </div>
-      </BrowserRouter>
       </CartProvider>
-    </AuthProvider>
+     </AuthProvider>
+    </BrowserRouter>
   )
 }
 

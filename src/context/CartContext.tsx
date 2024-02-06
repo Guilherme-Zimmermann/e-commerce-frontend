@@ -4,6 +4,7 @@ import { useAuth } from "../hooks/useAuth"
 import axios from "axios"
 import { baseUrl } from "../main"
 import { User } from "./AuthContext"
+import { useLocation } from "react-router-dom"
 
 export interface Cart {
     id: string
@@ -48,6 +49,7 @@ export const CartContext = createContext<CartContextType>({
 
 export const CartProvider = ({ children }: any) => {
     const { user, signed } = useAuth()
+    const location = useLocation()
 
     const [ cart, setCart ] = useState<Cart>() 
     const [ cartItem, setCartItem ] = useState<CartItem[]>([])
@@ -88,7 +90,6 @@ export const CartProvider = ({ children }: any) => {
         const cart = { id: cartId}
         const product = { id: productId }
         const existCartItem = cartItem.find(item => item.product.id === productId && item.status === "PENDING")
-
         
         if (existCartItem) {
             window.alert("Esse produto já foi adicionado ao carrinho")
@@ -100,11 +101,18 @@ export const CartProvider = ({ children }: any) => {
                 })
                 .then( async (response) => {
                     console.log(response.data)
+                    if (location.pathname === "/minha-conta") {
+                        return
+                    } else {
+                        alert("Produto adicionado ao carrinho")
+                    }
+                    
                 })
                 .catch(() =>{
                     console.log("Deu ruim")
                 })
         }
+
         setIsLoading(false)
     }
 

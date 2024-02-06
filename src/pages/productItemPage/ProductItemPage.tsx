@@ -53,6 +53,7 @@ export function ProductItemPage() {
                 const updatedCartItems = [...currentCartItems, newCartItem]
     
                 localStorage.setItem("cart-items", JSON.stringify(updatedCartItems))
+                alert("Produto adicionado ao carrinho com sucesso!")
             } else {
                 alert("Item já adicionado ao carrinho")
             }
