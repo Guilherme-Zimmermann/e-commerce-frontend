@@ -72,9 +72,9 @@ export const AuthProvider = ({ children }: any) => {
                     const tokenLifeTime = localStorage.getItem("token_life_time")
                     const timeStamp = new Date().getTime() - Number(tokenLifeTime)
 
-                    const fourtyEightHours = 48 * 60 * 60 * 1080
+                    const tenMinutes = 10 * 60 * 1080
 
-                    if(timeStamp > fourtyEightHours) {
+                    if(timeStamp > tenMinutes) {
                         localStorage.removeItem("user_token")
                         localStorage.removeItem("token_life_time")
                     }
